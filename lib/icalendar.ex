@@ -57,7 +57,7 @@ defimpl ICalendar.Serialize, for: ICalendar do
     id = Keyword.get(options, :id)
     headers = Keyword.get(options, :headers, [])
 
-    [vendor: vendor, name: name, id: id | headers]
+    [vendor: vendor, name: name, id: id] ++ headers
     |> Enum.reject(fn {_, v} -> is_nil(v) or v == "" end)
     |> Enum.map(&attribute/1)
     |> Enum.join("\n")
