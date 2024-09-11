@@ -55,8 +55,9 @@ defimpl ICalendar.Serialize, for: ICalendar do
     vendor = Keyword.get(options, :vendor, "Elixir ICalendar")
     name = Keyword.get(options, :name)
     id = Keyword.get(options, :id)
+    headers = Keyword.get(options, :headers, [])
 
-    [vendor: vendor, name: name, id: id]
+    [vendor: vendor, name: name, id: id] ++ headers
     |> Enum.reject(fn {_, v} -> is_nil(v) or v == "" end)
     |> Enum.map(&attribute/1)
     |> Enum.join("\n")
@@ -65,4 +66,5 @@ defimpl ICalendar.Serialize, for: ICalendar do
   defp attribute({:vendor, vendor}), do: "PRODID:-//Elixir ICalendar//#{vendor}//EN"
   defp attribute({:name, name}), do: "X-WR-CALNAME:#{name}"
   defp attribute({:id, id}), do: "X-WR-RELCALID:#{id}"
+  defp attribute({key, value}), do: "#{key}:#{value}"
 end

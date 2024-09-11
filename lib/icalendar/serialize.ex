@@ -10,6 +10,8 @@ defprotocol ICalendar.Serialize do
       `X-WR-CALNAME:Calendar Name`.
     * `id` a string containing the calendar's id. Will produce
       `X-WR-RELCALID:123456`.
+    * `headers` a keyword list containing the headers to
+      be placed in the  calendar header: `[{"Method", "Request"}]`
   """
   def to_ics(data, options \\ [])
 end
